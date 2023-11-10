@@ -1,31 +1,30 @@
-from db import Student, Mark
+from dbs import Teacher, Mark
 
 
-def serialize_db_student(student: Student):
+def serialize_teacherdata(teacher: Teacher):
     return {
-        "id": student.id,
-        "name": student.name,
-        "age": student.age,
+        'id': teacher.id,
+        'name': teacher.name,
+        'age': teacher.age,
+        'work_exp': teacher.work_exp,
+        'subject': teacher.subject,
+        'rating': teacher.rating,
+        'personality': teacher.personality
     }
 
 
-def serialize_db_mark(mark: Mark):
+def serialize_markdata(mark: Mark):
     return {
-        "id": mark.id,
-        "value": mark.value,
-        "timestamp": mark.timestamp,
+        'id': mark.id,
+        'teacher': mark.teacher.id,
+        'student': mark.student,
+        'value': mark.value,
+        'timestamp': mark.timestamp
     }
 
 
-def serialize_db_student_with_marks(student: Student):
+def serialize_teacherNmark(teacher: Teacher):
     return {
-        **serialize_db_student(student),
-        "marks": [serialize_db_mark(mark) for mark in student.marks]
-    }
-
-
-def serialize_db_mark_with_student(mark: Mark):
-    return {
-        **serialize_db_mark(mark),
-        "student": serialize_db_student(mark.student)
+        'a_teacher':serialize_teacherdata(teacher),
+        'marks': len([serialize_markdata(mark) for mark in teacher.marks])
     }
